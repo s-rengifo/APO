@@ -1,6 +1,6 @@
 import java.util.Scanner;
 public class calculatorTest {
-	// ERROR 1 -> no array change when its filled | ERROR 2 -> error when travel accompanied array | ERROR 3 -> Whats the higher price in array
+	
 	//MAIN
 	public static void main(String[] args) {
 		Scanner lector = new Scanner(System.in);
@@ -10,56 +10,41 @@ public class calculatorTest {
 		int menuSelectOption = 0;
 		int k = 0;
 		int z = 0;
+		double maxPrice = 0;
 		
 		do {
 			menuSelectOption = welcome();
-			if (z==10) {
-				z=0;
-			}
+			if (z==10) {z=0;}
 			switch (menuSelectOption) {
 				case 1:
 					// ALONE
 					String chooseRate = chooseFlightRate();
 					totalPassengerToPay = rateSelectionMenu(chooseRate, totalPassengerToPay);
 					System.out.println("Passenger, the final price of your flight will be: $" + totalPassengerToPay );
-					lastTenPrices[z] = totalPassengerToPay;
-					z++;
+					//ADD PRICES TO ARRAY
+					z = setArrayPricesAlone(z, totalPassengerToPay, lastTenPrices);
 					totalPassengerToPay = 0;
 					break;
 					
 				case 2:
 					//ACCOMPANIED
 					for (int i=1; i<4; i++) {
-						if (i>1) {
-							System.out.println(" ");
-							System.out.println("Welcome Passenger " + i);
-						}
+					welcomeAccompanied(i);
+					if (z==10) {z=0;}
 					chooseRate = chooseFlightRate();
 					totalPassengerToPay = rateSelectionMenu(chooseRate, totalPassengerToPay);
 					System.out.println("Passenger " + i + ", the final price of your flight will be: $" + totalPassengerToPay );
 					//ADD PRICES TO ARRAY
-					if (i==1) {
-					lastTenPrices[z] = totalPassengerToPay;
-					}
-					if (i>1) {
-					z++;
-					lastTenPrices[z] = totalPassengerToPay;
-					}
+					z = setArrayPricesAccompanied(i, z, totalPassengerToPay, lastTenPrices);
 					travelAccompaniedToPay = travelAccompaniedToPay+totalPassengerToPay;
 					totalPassengerToPay = 0;
-						if (i==3) {
-							System.out.println("The total for the " + i + " passengers will be: $" + travelAccompaniedToPay);
-							travelAccompaniedToPay = 0;
-						}
+					travelAccompaniedToPay = accompaniedTotalAmountToPay(i, travelAccompaniedToPay);
 					}
 					break;
 					
 				case 3:
 					// QUERY
-					System.out.println("The lastest 10 flights prices are:");
-					for (k = 0; k < lastTenPrices.length; k++) {
-					System.out.println("Price # " + (k+1) + ": " + lastTenPrices[k]);
-					}
+					arrayPrinterAndMaxPrice(k, maxPrice, lastTenPrices);
 					break;
 				
 				case 4:
@@ -87,7 +72,7 @@ public class calculatorTest {
 	// 1. Welcome | METHOD int
 			/**
 			*
-			* This method will welcome the user and it will ask for a menu selection.
+			* This method will welcome the user and it will ask him for a menu selection.
 			*
 			* @return menuSelectOption
 			*
@@ -356,5 +341,100 @@ public class calculatorTest {
 						System.out.println("You didnt choose a valid rate.");
 					}
 			return totalPassengerToPay;
+			}
+			
+		// 8.1 Set_Array_Prices_Accompanied | METHOD int
+			/**
+			*
+			* This method will check if i is equal to 1 or higher, if it is so, it will assign to that array index the corresponding value.
+			*
+			* @param int i
+			* @param int z
+			* @param double totalPassengerToPay
+			* @param double[] lastTenPrices
+			* @return z
+			*
+			*/
+			public static int setArrayPricesAccompanied(int i, int z, double totalPassengerToPay, double[] lastTenPrices) {
+				if (i==1) {
+					lastTenPrices[z] = totalPassengerToPay;
+					z++;
+					}
+					if (i>1) {
+					lastTenPrices[z] = totalPassengerToPay;
+					z++;
+					}
+			return z;
+			}
+			
+		// 8.2 Set_Array_Prices_Alone | METHOD int
+			/**
+			*
+			* This method will assign to the array index the corresponding value and will sum 1 to z array index counter.
+			*
+			* @param int z
+			* @param double totalPassengerToPay
+			* @param double[] lastTenPrices
+			* @return z
+			*
+			*/
+			public static int setArrayPricesAlone(int z, double totalPassengerToPay, double[] lastTenPrices) {
+				lastTenPrices[z] = totalPassengerToPay;
+				z++;
+			return z;
+			}
+			
+		// 8.3 Display_Accompanied_Total_Amount_To_Pay | METHOD double
+			/**
+			*
+			* This method will display the total amount to pay for the accompanied users and also will set the variable to 0.
+			*
+			* @param int i
+			* @param double travelAccompaniedToPay
+			* @return travelAccompaniedToPay
+			*
+			*/
+			public static double accompaniedTotalAmountToPay(int i, double travelAccompaniedToPay) {
+				if (i==3) {
+						System.out.println("The total for the " + i + " passengers will be: $" + travelAccompaniedToPay);
+						travelAccompaniedToPay = 0;
+						}
+			return travelAccompaniedToPay;
+			}
+		
+		// 9. Welcome_Accompanied_User | METHOD void
+			/**
+			*
+			* This method will display a message to welcome the users when selecting option 3 in the main menu.
+			*
+			* @param int i
+			*
+			*/
+			public static void welcomeAccompanied(int i) {
+				if (i>0) {
+							System.out.println(" ");
+							System.out.println("Welcome Passenger " + i);
+						}
+			}
+			
+		// 10. Array_Prices_Printer | METHOD void
+			/**
+			*
+			* This method will display the array with the prices by a FOR cycle and will indicate the highest price between them.
+			*
+			* @param int k
+			* @param double maxPrice
+			* @param double[] lastTenPrices
+			*
+			*/
+			public static void arrayPrinterAndMaxPrice(int k, double maxPrice, double[] lastTenPrices) {
+			System.out.println("The lastest 10 flights prices are:");
+				for (k = 0; k < lastTenPrices.length; k++) {
+				System.out.println("Price # " + (k+1) + ": " + lastTenPrices[k]);
+					if (lastTenPrices[k] > maxPrice) {
+					maxPrice = lastTenPrices[k];
+					}
+				}
+			System.out.println("The highest price among the last 10 flights is: $" + maxPrice);
 			}
 }
