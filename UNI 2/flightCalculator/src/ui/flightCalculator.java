@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class calculatorTest {
+public class flightCalculator {
 	
 	//MAIN
 	public static void main(String[] args) {
@@ -59,6 +59,7 @@ public class calculatorTest {
 	}
 	
 	// CONSTANTS
+	
 			public static final int PRICE_XS_RATE = 175000;
 			public static final int PRICE_S_RATE = 218750;
 			public static final int PRICE_M_RATE = 284375;
@@ -69,7 +70,7 @@ public class calculatorTest {
 			
 	// -----BEGINNING OF METHODS-----
 	
-	// 1. Welcome | METHOD int
+		// 1. Welcome | METHOD int
 			/**
 			*
 			* This method will welcome the user and it will ask him for a menu selection.
@@ -89,7 +90,7 @@ public class calculatorTest {
 			return menuSelectOption;
 			}
 	
-	// 2.1 Rate_XS_Includes | METHOD void
+		// 2.1 Rate_XS_Includes | METHOD void
 			/**
 			*
 			* This method will just display information about what the XS rate brings.
@@ -104,7 +105,7 @@ public class calculatorTest {
 				System.out.println(" ");
 			}
 			
-	// 2.2 Rate_S_Includes | METHOD void
+		// 2.2 Rate_S_Includes | METHOD void
 			/**
 			*
 			* This method will just display information about what the S rate brings.
@@ -121,7 +122,7 @@ public class calculatorTest {
 				System.out.println(" ");
 			}
 			
-	// 2.3 Rate_M_Includes | METHOD void
+		// 2.3 Rate_M_Includes | METHOD void
 			/**
 			*
 			* This method will just display information about what the M rate brings.
@@ -140,12 +141,12 @@ public class calculatorTest {
 				System.out.println(" ");
 			}
 			
-	// 2.4 Rate_Recommendation | METHOD void
+		// 2.4 Rate_Recommendation | METHOD void
 			/**
 			*
 			* This method will manage the three possible rates to choose and will display the best one to choose.
 			*
-			* @param double passengerW
+			* @param passengerW
 			*
 			*/
 			public static void rateRecommendation(double passengerW) {
@@ -176,7 +177,7 @@ public class calculatorTest {
 						}
 			}
 			
-	// 3. Choose-Flight-Rate | METHOD String
+		// 3. Choose-Flight-Rate | METHOD String
 			/**
 			*
 			* This method will show to the user a suggested rate depending on the imputed weight.
@@ -195,12 +196,12 @@ public class calculatorTest {
 			return chooseRate;
 			}
 	
-	// 4.1 Seat-Selection-XS-S | METHOD Double
+		// 4.1 Seat-Selection-XS-S | METHOD Double
 			/**
 			*
 			* This method will display the option to select a seat for the XS and S rates, returning the sum value to the check.
 			*
-			* @param double totalPassengerToPay
+			* @param totalPassengerToPay
 			* @return totalPassengerToPay
 			*
 			*/ 
@@ -228,7 +229,7 @@ public class calculatorTest {
 			*
 			* This method will allow the rate M user to select their seat, returning the sum value to the check.
 			*
-			* @param double totalPassengerToPay
+			* @param totalPassengerToPay
 			* @return totalPassengerToPay
 			*
 			*/ 
@@ -250,7 +251,7 @@ public class calculatorTest {
 			*
 			* This method will allow the user to add extra 10kg suitcases, returning the sum value to the check.
 			*
-			* @param double totalPassengerToPay
+			* @param totalPassengerToPay
 			* @return totalPassengerToPay
 			*
 			*/
@@ -278,7 +279,7 @@ public class calculatorTest {
 			*
 			* This method will allow the user to add extra 23kg suitcases, returning the sum value to the check.
 			*
-			* @param double totalPassengerToPay
+			* @param totalPassengerToPay
 			* @return totalPassengerToPay
 			*
 			*/
@@ -306,8 +307,8 @@ public class calculatorTest {
 			*
 			* This method will allow you to call a menu for selecting the rate flight, allowing to call it repetitive times when the user is traveling accompanied.
 			*
-			* @param String chooseRate
-			* @param double totalPassengerToPay
+			* @param chooseRate
+			* @param totalPassengerToPay
 			* @return totalPassengerToPay
 			*
 			*/
@@ -348,10 +349,10 @@ public class calculatorTest {
 			*
 			* This method will check if i is equal to 1 or higher, if it is so, it will assign to that array index the corresponding value.
 			*
-			* @param int i
-			* @param int z
-			* @param double totalPassengerToPay
-			* @param double[] lastTenPrices
+			* @param i
+			* @param z
+			* @param totalPassengerToPay
+			* @param lastTenPrices
 			* @return z
 			*
 			*/
@@ -372,9 +373,9 @@ public class calculatorTest {
 			*
 			* This method will assign to the array index the corresponding value and will sum 1 to z array index counter.
 			*
-			* @param int z
-			* @param double totalPassengerToPay
-			* @param double[] lastTenPrices
+			* @param z
+			* @param totalPassengerToPay
+			* @param lastTenPrices
 			* @return z
 			*
 			*/
@@ -389,8 +390,8 @@ public class calculatorTest {
 			*
 			* This method will display the total amount to pay for the accompanied users and also will set the variable to 0.
 			*
-			* @param int i
-			* @param double travelAccompaniedToPay
+			* @param i
+			* @param travelAccompaniedToPay
 			* @return travelAccompaniedToPay
 			*
 			*/
@@ -407,7 +408,7 @@ public class calculatorTest {
 			*
 			* This method will display a message to welcome the users when selecting option 3 in the main menu.
 			*
-			* @param int i
+			* @param i
 			*
 			*/
 			public static void welcomeAccompanied(int i) {
@@ -422,9 +423,9 @@ public class calculatorTest {
 			*
 			* This method will display the array with the prices by a FOR cycle and will indicate the highest price between them.
 			*
-			* @param int k
-			* @param double maxPrice
-			* @param double[] lastTenPrices
+			* @param k
+			* @param maxPrice
+			* @param lastTenPrices
 			*
 			*/
 			public static void arrayPrinterAndMaxPrice(int k, double maxPrice, double[] lastTenPrices) {
