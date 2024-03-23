@@ -1,0 +1,8 @@
+1.From GitBash to compile all files: (Main folder)
+javac -d bin src/*/*.java
+
+2. Compile Main from (Main folder)
+javac -cp src src/ui/nameOfMain.java
+
+3. Run program
+java -cp src ui.nameOfMain
