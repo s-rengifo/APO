@@ -11,10 +11,10 @@ public class University{
 	
 	/**
      * 
-     * Constructor for the University class, initializes the user, password and professor list.
+     * Constructor for the University class, initializes the user, password and professor list
      * 
-     * @param user The username for the University.
-     * @param password The password for the University.
+     * @param user The username for the University
+     * @param password The password for the University
 	 *
      */
 	public University (String user, String password) {
@@ -23,186 +23,198 @@ public class University{
 		professorList= new Professor[50];
 	}
 	
-	 /**
+    /**
 	 *
-     * Registers a new professor
-     * 
-     * @param professorName
-     * @param professorSurname
-     * @param professorId
+     * Registers a new Full-Time Professor
+     *
+     * @param professorName The name of the professor
+     * @param professorSurname The surname of the professor
+     * @param professorId The identification of the professor
+     * @param extraHoursAmount The extra hours amount of the professor
+     * @param bonusSalary The bonus salary of the professor
      * @return A message indicating the success or failure of the operation
 	 *
      */
-	public String registerProfessor(String professorName, String professorSurname, String professorId) {
-		String message="Professor succesfully created";
-		boolean avalible = professorAvailable();
-		if (avalible==true) {
-			Professor objTemporal=searchProfessor(professorId);
-			if (objTemporal==null) {
-				boolean exit=false;
-				for (int i = 0; i < professorList.length && !exit; i++) {
-					if (professorList[i] == null) {
-						objTemporal = new Professor(professorName, professorSurname, professorId);
-						professorList[i] = objTemporal;
-						exit=true;
-					}
-				}
-			} else
-			message = "The Professor is already created.";
-		}
-		else
-		message="Error, you cannot add more professors.";	
-	return message;
-	}
-	
-	/**
+    public String registerFullTimeProfessor(String professorName, String professorSurname, String professorId, double professorBaseSalary, int extraHoursAmount, double bonusSalary) {
+       double professorTotalSalary = 0;
+	   
+	   if (!professorAvailable()) {
+            return "Error, you cannot add more professors.";
+        }
+
+        Professor objTemporal = searchProfessor(professorId);
+        if (objTemporal != null) {
+            return "The Professor is already created.";
+        }
+
+        FullTimeProfessor fullTimeProfessor = new FullTimeProfessor(professorName, professorSurname, professorId, professorBaseSalary, professorTotalSalary, extraHoursAmount, bonusSalary);
+        // Calculate salary
+		professorTotalSalary = fullTimeProfessor.calculateSalary();
+		// Set salary
+		fullTimeProfessor.setProfessorTotalSalary(professorTotalSalary);
+		
+        boolean exit = false;
+        for (int i = 0; i < professorList.length && !exit; i++) {
+            if (professorList[i] == null) {
+                professorList[i] = fullTimeProfessor;
+                exit = true;
+            }
+        }
+        
+        return "Full-Time Professor successfully created";
+    }
+    
+    /**
+	 *
+     * Registers a new Part-Time Professor
+     *
+     * @param professorName The name of the professor
+     * @param professorSurname The surname of the professor
+     * @param professorId The identification of the professor
+     * @param workedHoursAmount The worked hours amount of the professor
+     * @return A message indicating the success or failure of the operation
+	 *
+     */
+    public String registerPartTimeProfessor(String professorName, String professorSurname, String professorId, double professorBaseSalary, int workedHoursAmount) {
+        double professorTotalSalary = 0;
+		
+		if (!professorAvailable()) {
+            return "Error, you cannot add more professors.";
+        }
+
+        Professor objTemporal = searchProfessor(professorId);
+        if (objTemporal != null) {
+            return "The Professor is already created.";
+        }
+
+        PartTimeProfessor partTimeProfessor = new PartTimeProfessor(professorName, professorSurname, professorId, professorBaseSalary, professorTotalSalary, workedHoursAmount);
+        // Calculate salary
+		professorTotalSalary = partTimeProfessor.calculateSalary();
+		// Set salary
+		partTimeProfessor.setProfessorTotalSalary(professorTotalSalary);
+		
+        boolean exit = false;
+        for (int i = 0; i < professorList.length && !exit; i++) {
+            if (professorList[i] == null) {
+                professorList[i] = partTimeProfessor;
+                exit = true;
+            }
+        }
+        
+        return "Part-Time Professor successfully created";
+    }
+    
+    /**
 	 *
      * Checks if there is an available slot in the professor list
-     * 
+     *
      * @return True if there is an available slot, false otherwise
 	 *
      */
-	public boolean professorAvailable() {
-		for (int i = 0; i<professorList.length; i++) {
-			if (professorList[i] == null) {
-				return true;
-			}
-		}
+    public boolean professorAvailable() {
+        for (int i = 0; i < professorList.length; i++) {
+            if (professorList[i] == null) {
+                return true;
+            }
+        }
         return false;
     }
-
-	/**
+    
+    /**
 	 *
-     * Searches a community by his name
-     * 
-     * @param communityName The name of the community to search for
-     * @return The community object if found, null otherwise
-	 *
-     */
-    public Professor searchProfessor(String professorId) {
-		
-        for (int i = 0; i < professorList.length; i++) {
-			if (professorList[i] != null && professorList[i].getId().equals(professorId)) {
-				return professorList[i];
-			}
-		}
-    return null;
-	
-    }
-	
-	public String registerProyectProfessor(String proyectName, double proyectInversion, int proyectRoleSelection, String professorName) {
-		Proyect.Role proyectRole = null;
-		
-					if (proyectRoleSelection==1) {
-						proyectRole=Proyect.Role.LEA;
-					}
-					else if (proyectRoleSelection==2) {
-						proyectRole=Proyect.Role.EXE;
-					}
-					else if (proyectRoleSelection==3) {
-						proyectRole=Proyect.Role.OBS;
-					}
-					
-		Proyect proyect = new Proyect(proyectName, proyectInversion, proyectRole);
-		String message = "Proyect added to professor successfully";
-
-		Professor professor = searchProfessorName(professorName);
-			if (professor != null) {
-				boolean exit = false;
-				exit = professor.addProyect(professor, proyect);
-					if (!exit) {
-						message = "The professor proyect list is full";
-					}
-				} else {
-				message = "Professor not found";
-			}
-			return message;
-	}
-	
-	/**
-	 *
-     * Searches for a professor by his name
-     * 
-     * @param professorName The name of the professor to search for
+     * Searches a professor by their ID
+     *
+     * @param professorId The ID of the professor to search for
      * @return The professor object if found, null otherwise
 	 *
      */
-    public Professor searchProfessorName(String professorName) {
-		
+    public Professor searchProfessor(String professorId) {
         for (int i = 0; i < professorList.length; i++) {
-        if (professorList[i] != null && professorList[i].getName().equals(professorName)) {
-            return professorList[i];
-			}
-		}
-    return null;
-	
+            if (professorList[i] != null && professorList[i].getId().equals(professorId)) {
+                return professorList[i];
+            }
+        }
+        return null;
     }
 	
-	public String queryObserverProfessor(int proyectRoleSelection) {
-		Proyect.Role proyectRole = null;
-		String message = "";
-		Proyect.Role tempRole = null;
+	 /**
+	 *
+     * Queries all the professors and add them to a message String if they exist
+     *
+     * @return The professor if found
+	 *
+     */
+	public String queryAllProfessor() {
+        String message = "";
 		
-					if (proyectRoleSelection==1) {
-						proyectRole=Proyect.Role.LEA;
-					}
-					else if (proyectRoleSelection==2) {
-						proyectRole=Proyect.Role.EXE;
-					}
-					else if (proyectRoleSelection==3) {
-						proyectRole=Proyect.Role.OBS;
-					}	
-		
-		message += "Professors which role in a proyect is observer: ";
 		for (int i = 0; i < professorList.length; i++) {
-			Professor professor = professorList[i];
-			if (professor != null) {
-				String professorName = professor.getName();
-				Proyect tempProyect = professor.getProyectList()[i];
-				if (tempProyect!=null) {
-					tempRole = tempProyect.getProyectRole();
-				}
-				if (tempRole==proyectRole) {
-					message += "\n" + (i+1) + ". " + professorName;
-				}
-			}
-		
-			if (message.equals("Professors which role in a proyect is observer: ")) {
-				message = "Seems that, there are no professors working on a Observer proyect role";
+			if (professorList[i] != null) {
+				message+=professorList[i].toString() + " \n";
 			}
 		}
-
-		return message;
-	}
+        
+		if (message.equals("")) {message="No professors are registered yet.";}
+        
+        return message;
+    }
 	
-	public String queryProyectHigherInversion() {
-		String message = "";
-		double highestInversion = 0;
-		String highestInversionProjectName = "";
-
-		for (Professor professor : professorList) {
-			if (professor != null) {
-				Proyect[] proyects = professor.getProyectList();
-				for (Proyect proyect : proyects) {
-				if (proyect != null) {
-					double proyectInversion = proyect.getProyectInversion();
-					if (proyectInversion > highestInversion) {
-						highestInversion = proyectInversion;
-					highestInversionProjectName = proyect.getName();
-					}
-				}
+	 /**
+	 *
+     * This add to a message String the salary of the registered professors 
+     *
+     * @return The professor and the salary if found
+	 *
+     */
+	public String calculateSalaryProfessor() {
+        String message = "";
+		String name = "";
+		String surname = "";
+		double salary = 0;
+		
+		for (int i = 0; i < professorList.length; i++) {
+			if (professorList[i] != null) {
+				Professor tempProfessor = professorList[i];
+				salary = tempProfessor.getProfessorTotalSalary();
+				name = tempProfessor.getProfessorName();
+				surname = tempProfessor.getProfessorSurname();
+				message+= "PROFESSOR - " + name + " " + surname + " \n";
+				message+= "Salary: $" + salary + " \n";
+			}
+		}
+        
+		if (message.equals("")) {message="No professors are registered yet.";}
+        
+        return message;
+    }
+	
+	 /**
+	 *
+     * Queries all the FullTime professors which has a bonus salary higher than 2M
+     *
+     * @return The professor if found
+	 *
+     */
+	public String queryFullTimeBonusHigherTwoM() {
+        String message = "The full time professors which has a bonus higher than 2M are: \n";
+		String name = "";
+		String surname = "";
+		double bonus = 0;
+		
+		for (int i = 0; i < professorList.length; i++) {
+			if (professorList[i] != null && professorList[i] instanceof FullTimeProfessor) {
+				FullTimeProfessor tempProfessor = (FullTimeProfessor) professorList[i];;
+				bonus = tempProfessor.getBonusSalary();
+				name = tempProfessor.getProfessorName();
+				surname = tempProfessor.getProfessorSurname();
+				if (bonus>2000000) {
+					message+= "PROFESSOR - " + name + " " + surname + " \n";
 				}
 			}
 		}
-
-		if (highestInversionProjectName.equals("")) {
-			message = "No projects registered.";
-		} else {
-			message = "The project with the highest inversion is: " + highestInversionProjectName +
-					  " with an inversion of $" + highestInversion;
-		}
-
-		return message;
-	}
-
+        
+		if (message.equals("The full time professors which has a bonus higher than 2M are: \n")) {message="No full time professors registered with this conditions.";}
+        
+        return message;
+    }
+	
 }

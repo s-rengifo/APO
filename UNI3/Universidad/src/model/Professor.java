@@ -4,7 +4,8 @@ public class Professor{
 	private String professorName;
 	private String professorSurname;
 	private String professorId;
-	private Proyect[] proyectList;
+	private double professorBaseSalary;
+    private double professorTotalSalary;
 	
 	// Relations
 	
@@ -21,11 +22,12 @@ public class Professor{
      * @param professorTotalSalary
 	 *
      */
-	public Professor(String professorName, String professorSurname, String professorId){
+	public Professor(String professorName, String professorSurname, String professorId, double professorBaseSalary, double professorTotalSalary){
 		this.professorName=professorName;
 		this.professorSurname=professorSurname;
 		this.professorId=professorId;
-		this.proyectList = new Proyect[30];
+		this.professorBaseSalary=professorBaseSalary;
+		this.professorTotalSalary=professorTotalSalary;
 	}
 	
 	 /**
@@ -46,26 +48,80 @@ public class Professor{
 		return professorName;
 	}
 	
-	 /**
-	 *
-     * Retrieves the array of proyects registered for a professor
-     *
-     * @return An array of proyects registered for a professor
-	 *
-     */
-	public Proyect[] getProyectList() {
-		return proyectList;
+	/**
+	*
+	* Provides the string of a professor
+	*
+	* @return A string of the professor
+	*
+	*/
+	public String toString() {
+		String result = "PROFESSOR - " + professorName + " " + professorSurname +"\n";
+		result += "Document Id: " + professorId + "\n";
+		result += "Base salary: $" + professorBaseSalary + "\n";
+		result += "TOTAL salary: $" + professorTotalSalary + "\n";
+		
+    return result;
 	}
 	
-	public boolean addProyect(Professor professor, Proyect proyect){
-		boolean exit = false;
-		for (int i = 0; i < professor.getProyectList().length && !exit; i++) {
-					if (professor.getProyectList()[i] == null) {
-						professor.getProyectList()[i] = proyect;
-						exit = true;
-					}
-				}
-	 return exit;
+	/**
+	*
+	* Calculates the salary of a professor
+	*
+	* @return The salary of the professor
+	*
+	*/
+	public double calculateSalary() {
+		double professorTotalSalary = 0;
+		
+    return professorTotalSalary;
+	}
+	
+	 /**
+	 *
+	 * Sets the total salary of the professor
+	 *
+	 * @param professorTotalSalary The new total salary of the professor
+	 *
+	 */
+	public void setProfessorTotalSalary(double professorTotalSalary) {
+        this.professorTotalSalary = professorTotalSalary;
+    }
+	
+	 /**
+     * Retrieves the base salary of the professor
+     *
+     * @return The base salary of the of professor
+     */
+	public double getProfessorBaseSalary() {
+		return professorBaseSalary;
+	}
+	
+	 /**
+     * Retrieves the name of the professor
+     *
+     * @return The name of the of professor
+     */
+	public String getProfessorName() {
+		return professorName;
+	}
+	
+	 /**
+     * Retrieves the surname of the professor
+     *
+     * @return The surname of the of professor
+     */
+	public String getProfessorSurname() {
+		return professorSurname;
+	}
+	
+	 /**
+     * Retrieves the full salary of the professor
+     *
+     * @return The full salary of the of professor
+     */
+	public double getProfessorTotalSalary() {
+		return professorTotalSalary;
 	}
 	
 }
